@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Flight Map</title>
+        <style>
+            
+            html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                background: #236267;
+            }
+
+            .water {
+                fill: #711331;
+            }
+
+            .land {
+                fill: #6c256f;
+                stroke: #bd5e7d;
+                stroke-width: 0.7px;
+            }
+
+            .route {
+                stroke: rgba(255, 100, 25, 0.2);
+                stroke-width: 3;
+                fill: transparent;
+            }
+
+            .route:hover {
+                stroke: green;
+            }
+
+            .focused {
+                fill: #aa5739;
+            }
+
+            select {
+                position: absolute;
+                top: 20px;
+                left: 580px;
+                border: solid #ccc 1px;
+                padding: 3px;
+                box-shadow: inset 1px 1px 2px #ddd8dc;
+            }
+
+            .countryTooltip {
+                position: absolute;
+                display: none;
+                pointer-events: none;
+                background: #fff;
+                padding: 5px;
+                text-align: left;
+                border: solid #ccc 1px;
+                color: #666;
+                font-size: 14px;
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="dist/app.js"></script>
+    </body>
+</html>

@@ -1,0 +1,244 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+		"geometry": {
+			"type": "Point",
+			"coordinates": [17.1073, 48.143889]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Bratislava"
+		},
+		"id": "Bratislava"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [23.7333333, 37.9833333]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Athens"
+		},
+		"id": "Athens"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [2.154007, 41.390205]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Barcelona"
+		},
+		"id": "Barcelona"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [-1.898575, 52.489471]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Birmingham"
+		},
+		"id": "Birmingham"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [4.34878, 50.85045]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Brussels"
+		},
+		"id": "Brussels"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [13.41053, 52.52437]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Berlin"
+		},
+		"id": "Berlin"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [-6.24889, 53.33306]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Dublin"
+		},
+		"id": "Dublin"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [55.17128, 25.0657]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Dubai"
+		},
+		"id": "Dubai"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [-3.188267, 55.953251]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Edinburgh"
+		},
+		"id": "Edinburgh"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [34.9519, 29.5577]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Eilat"
+		},
+		"id": "Eilat"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [23.583333, 46.766667]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Cluj"
+		},
+		"id": "Cluj"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [21.25, 48.716667]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Košice"
+		},
+		"id": "Košice"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [30.523333, 50.45]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Kiev"
+		},
+		"id": "Kiev"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [-1.548567, 53.801277]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Leeds"
+		},
+		"id": "Leeds"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [-0.118092, 51.509865]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "London"
+		},
+		"id": "London"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [-3.707398, 40.415363]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Madrid"
+		},
+		"id": "Madrid"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [-2.244644, 53.483959]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Manchester"
+		},
+		"id": "Manchester"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [9.183333, 45.466667]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Milano"
+		},
+		"id": "Milano"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [37.616667, 55.75]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Moscow"
+		},
+		"id": "Moscow"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [21.896111, 43.319167]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Niš"
+		},
+		"id": "Niš"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [2.3508, 48.8567]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Paris"
+		},
+		"id": "Paris"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [14.416667, 50.083333]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Prague"
+		},
+		"id": "Prague"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [12.5, 41.9]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Rome"
+		},
+		"id": "Rome"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [21.433333, 42]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Skopje"
+		},
+		"id": "Skopje"
+	}]
+}
