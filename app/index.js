@@ -50,6 +50,27 @@ d3.queue()
 
         const bratislava = citiesG.find(c => c.id === 'Bratislava')
         const otherCities = citiesG.filter(c => c.id !== 'Bratislava')
+        
+        cts.transition()
+            .duration(function (data) {
+                return Math.random() * 10000
+            })
+            .attrTween('d', data => {
+                let workingPoint = {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [0, 0]
+                    }
+                }
+                return function (t) {
+                    //TODO: compute correct interpolation in lat/lng or use path dom elements
+                    workingPoint.geometry.coordinates[0] = bratislava.geometry.coordinates[0] + (data.geometry.coordinates[0] - bratislava.geometry.coordinates[0]) * t
+                    workingPoint.geometry.coordinates[1] = bratislava.geometry.coordinates[1] + (data.geometry.coordinates[1] - bratislava.geometry.coordinates[1]) * t
+
+                    return path(workingPoint)
+                } 
+            })
 
         const lines = otherCities.map(c => lineStringFeature(bratislava.geometry.coordinates, c.geometry.coordinates))
 
@@ -59,6 +80,7 @@ d3.queue()
             .append('path')
             .attr('class', 'route')
             .attr('d', path)
+
         
         let sensitivity = 0.1
         svg.call(d3.drag()
@@ -79,10 +101,6 @@ d3.queue()
                 svg.selectAll('path').attr('d', path)
             }))
 
-        
-
-
-
         function lineStringFeature (start, end) {
             return {
                 "type": "Feature",
@@ -101,7 +119,7 @@ d3.queue()
 
             d3.transition()
                 .duration(2500)
-                .tween('rotate', () => {
+                .tween('rotateAndZoom', () => {
                     const r = d3.interpolate(projection.rotate(), [-point[0], -point[1]])
                     const s = d3.interpolate(projection.scale(), 500)
                     return function (t) {
