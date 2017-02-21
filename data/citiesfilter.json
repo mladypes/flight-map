@@ -17,7 +17,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Athens"
+			"city": "Athens",
+			"temperature": 11.7,
+			"flightDuration": 130
 		},
 		"id": "Athens"
 	}, {
@@ -27,7 +29,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Barcelona"
+			"city": "Barcelona",
+			"temperature": 11.3,
+			"flightDuration": 140
 		},
 		"id": "Barcelona"
 	}, {
@@ -37,7 +41,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Birmingham"
+			"city": "Birmingham",
+			"temperature": 5.2,
+			"flightDuration": 155
 		},
 		"id": "Birmingham"
 	}, {
@@ -47,7 +53,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Brussels"
+			"city": "Brussels",
+			"temperature": 6.4,
+			"flightDuration": 105
 		},
 		"id": "Brussels"
 	}, {
@@ -57,7 +65,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Berlin"
+			"city": "Berlin",
+			"temperature": 4.8,
+			"flightDuration": 80
 		},
 		"id": "Berlin"
 	}, {
@@ -67,7 +77,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Dublin"
+			"city": "Dublin",
+			"temperature": 6.6,
+			"flightDuration": 180
 		},
 		"id": "Dublin"
 	}, {
@@ -77,7 +89,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Dubai"
+			"city": "Dubai",
+			"temperature": 22.3,
+			"flightDuration": 345
 		},
 		"id": "Dubai"
 	}, {
@@ -87,7 +101,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Edinburgh"
+			"city": "Edinburgh",
+			"temperature": 5.5,
+			"flightDuration": 165
 		},
 		"id": "Edinburgh"
 	}, {
@@ -97,7 +113,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Eilat"
+			"city": "Eilat",
+			"temperature": 19.8,
+			"flightDuration": 225
 		},
 		"id": "Eilat"
 	}, {
@@ -107,7 +125,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Cluj"
+			"city": "Cluj",
+			"temperature": 4.1,
+			"flightDuration": 80
 		},
 		"id": "Cluj"
 	}, {
@@ -117,7 +137,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Košice"
+			"city": "Košice",
+			"temperature": 4.0,
+			"flightDuration": 55
 		},
 		"id": "Košice"
 	}, {
@@ -127,7 +149,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Kiev"
+			"city": "Kiev",
+			"temperature": 0.7,
+			"flightDuration": 100
 		},
 		"id": "Kiev"
 	}, {
@@ -137,7 +161,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Leeds"
+			"city": "Leeds",
+			"temperature": 4.5,
+			"flightDuration": 145
 		},
 		"id": "Leeds"
 	}, {
@@ -147,7 +173,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "London"
+			"city": "London",
+			"temperature": 8.0,
+			"flightDuration": 145
 		},
 		"id": "London"
 	}, {
@@ -157,7 +185,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Madrid"
+			"city": "Madrid",
+			"temperature": 190,
+			"flightDuration": 10.7
 		},
 		"id": "Madrid"
 	}, {
@@ -167,7 +197,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Manchester"
+			"city": "Manchester",
+			"temperature": 6.3,
+			"flightDuration": 190
 		},
 		"id": "Manchester"
 	}, {
@@ -177,7 +209,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Milano"
+			"city": "Milano",
+			"temperature": 13.2,
+			"flightDuration": 90
 		},
 		"id": "Milano"
 	}, {
@@ -187,7 +221,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Moscow"
+			"city": "Moscow",
+			"temperature": -2.2,
+			"flightDuration": 155
 		},
 		"id": "Moscow"
 	}, {
@@ -197,7 +233,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Niš"
+			"city": "Niš",
+			"temperature": 6.6,
+			"flightDuration": 90
 		},
 		"id": "Niš"
 	}, {
@@ -207,7 +245,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Paris"
+			"city": "Paris",
+			"temperature": 8.4,
+			"flightDuration": 125
 		},
 		"id": "Paris"
 	}, {
@@ -217,7 +257,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Prague"
+			"city": "Prague",
+			"temperature": 3.1,
+			"flightDuration": 60
 		},
 		"id": "Prague"
 	}, {
@@ -227,7 +269,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Rome"
+			"city": "Rome",
+			"temperature": 10.2,
+			"flightDuration": 100
 		},
 		"id": "Rome"
 	}, {
@@ -237,7 +281,9 @@
 		},
 		"type": "Feature",
 		"properties": {
-			"city": "Skopje"
+			"city": "Skopje",
+			"temperature": 7.6,
+			"flightDuration": 95
 		},
 		"id": "Skopje"
 	}]

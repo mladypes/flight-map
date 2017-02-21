@@ -30,7 +30,10 @@ d3.queue()
     .defer(d3.json, 'data/citiesfilter.json')
     .await((error, world, countryData, cities) => {
         let countries = topojson.feature(world, world.objects.countries).features
+
         let citiesG = cities.features
+        const bratislava = citiesG.find(c => c.id === 'Bratislava')
+        const otherCities = citiesG.filter(c => c.id !== 'Bratislava')
 
         const countryMap = countryData.reduce((map, data) => Object.assign(map, {[data.name]: data}), {})
 
@@ -41,37 +44,6 @@ d3.queue()
             .attr('class', 'land')
             .attr('d', path)
         
-        let cts = svg.selectAll('path.city')
-            .data(citiesG)
-            .enter()
-            .append('path')
-            .attr('class', 'city')
-            .attr('d', path)
-
-        const bratislava = citiesG.find(c => c.id === 'Bratislava')
-        const otherCities = citiesG.filter(c => c.id !== 'Bratislava')
-        
-        cts.transition()
-            .duration(function (data) {
-                return Math.random() * 10000
-            })
-            .attrTween('d', data => {
-                let workingPoint = {
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [0, 0]
-                    }
-                }
-                return function (t) {
-                    //TODO: compute correct interpolation in lat/lng or use path dom elements
-                    workingPoint.geometry.coordinates[0] = bratislava.geometry.coordinates[0] + (data.geometry.coordinates[0] - bratislava.geometry.coordinates[0]) * t
-                    workingPoint.geometry.coordinates[1] = bratislava.geometry.coordinates[1] + (data.geometry.coordinates[1] - bratislava.geometry.coordinates[1]) * t
-
-                    return path(workingPoint)
-                } 
-            })
-
         const lines = otherCities.map(c => lineStringFeature(bratislava.geometry.coordinates, c.geometry.coordinates))
 
         let lns = svg.selectAll('path.route')
@@ -80,26 +52,17 @@ d3.queue()
             .append('path')
             .attr('class', 'route')
             .attr('d', path)
+        
+        let cts = svg.selectAll('path.city')
+            .data(otherCities)
+            .enter()
+            .append('path')
+            .attr('class', 'city')
+            .attr('d', path)
 
         
-        let sensitivity = 0.1
-        svg.call(d3.drag()
-            .subject(() => {
-                const rotate = projection.rotate()
-                return {
-                    x: rotate[0] / sensitivity,
-                    y: -rotate[1] / sensitivity
-                }
-            })
-            .on('drag', () => {
-                const rotate = projection.rotate()
-                projection.rotate([
-                    d3.event.x * sensitivity,
-                    -d3.event.y * sensitivity,
-                    rotate[2]])
-                
-                svg.selectAll('path').attr('d', path)
-            }))
+
+        
 
         function lineStringFeature (start, end) {
             return {
