@@ -1,8 +1,28 @@
 import * as d3 from 'd3'
 import * as topojson from 'topojson'
 
+import * as slider from 'nouislider'
+
 const width = 600
 const height = 500
+
+slider.create(document.getElementById('slider-flight-length'), {
+	start: [20, 80],
+	connect: true,
+	range: {
+		'min': 0,
+		'max': 100
+	}
+});
+
+slider.create(document.getElementById('slider-temperature'), {
+	start: [20, 80],
+	connect: true,
+	range: {
+		'min': 0,
+		'max': 100
+	}
+});
 
 const projection = d3.geoOrthographic()
     .scale(220)
@@ -13,7 +33,7 @@ const projection = d3.geoOrthographic()
 const path = d3.geoPath()
     .projection(projection)
 
-const svg = d3.select('body')
+const svg = d3.select('#earth-container')
     .append('svg')
     .attr('width', '100%')
     .attr('height', '100%')
@@ -60,10 +80,6 @@ d3.queue()
             .attr('class', 'city')
             .attr('d', path)
 
-        
-
-        
-
         function lineStringFeature (start, end) {
             return {
                 "type": "Feature",
@@ -72,6 +88,43 @@ d3.queue()
                     "coordinates": [start, end]
                 }
             }
+        }
+
+        let planes;
+        
+        function addPlanes () {
+            planes = svg.selectAll('.plane')
+                .data(lns.nodes())
+                .enter()
+                .append('circle')
+                .attr('r', 3)
+                .attr('class', 'plane')
+                .attr("transform", d => "translate(" + d.getPointAtLength(0).x + ',' + d.getPointAtLength(0).y + ")" )
+        }
+
+        function planesTransition() {
+            planes
+                .filter(function () {
+                    return d3.active(this) === null
+                })
+                .transition()
+                .duration(function () {
+                    return 6000 + Math.random() * 6000
+                })
+                .attrTween('transform', function (d) {
+                    return translateAlong(d)
+                })
+                .on('end', planesTransition)
+        }
+
+        function translateAlong (path) {
+            const l = path.getTotalLength();
+            
+            return function (t) {
+                const p = path.getPointAtLength(t * l);
+                return "translate(" + p.x + "," + p.y + ")";
+            };
+            
         }
         
         transitionTo('Slovakia')
@@ -91,6 +144,10 @@ d3.queue()
                         svg.selectAll('path')
                             .attr('d', path)
                     }
+                })
+                .on('end', function () {
+                    addPlanes();
+                    planesTransition();
                 })
         }
     })

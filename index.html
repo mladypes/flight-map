@@ -2,64 +2,69 @@
 <html>
     <head>
         <title>Flight Map</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+        <link href="css/nouislider.min.css" rel="stylesheet">
         <style>
-            
             html, body {
                 width: 100%;
                 height: 100%;
                 margin: 0;
                 padding: 0;
-                background: #236267;
+                background: #000000;
             }
 
             .water {
-                fill: #711331;
+                fill: #214043;
             }
 
             .land {
-                fill: #6c256f;
-                stroke: #bd5e7d;
+                fill: #9CE3E9;
+                stroke: #808B8C;
                 stroke-width: 0.7px;
             }
 
             .route {
-                stroke: rgb(255, 100, 25);
-                stroke-width: 1;
+                stroke: #008b00;
+                stroke-width: 10;
                 fill: transparent;
             }
 
             .route:hover {
-                stroke: green;
+                stroke: red;
             }
 
-            .focused {
-                fill: #aa5739;
+            .full-size {
+                width: 100%;
+                height: 100%;
             }
 
-            select {
+            .earth-container {
                 position: absolute;
-                top: 20px;
-                left: 580px;
-                border: solid #ccc 1px;
-                padding: 3px;
-                box-shadow: inset 1px 1px 2px #ddd8dc;
+                left: 0;
+                right: 0;
             }
 
-            .countryTooltip {
-                position: absolute;
-                display: none;
-                pointer-events: none;
-                background: #fff;
-                padding: 5px;
-                text-align: left;
-                border: solid #ccc 1px;
-                color: #666;
-                font-size: 14px;
-                font-family: sans-serif;
+            .plane {
+                fill: red;
+            }
+
+            .controls-wrapper {
+                position: fixed;
+                top: 50px;
+                left: 50px;
+                width: 300px;
             }
         </style>
     </head>
     <body>
+        <div class="earth-container full-size" id="earth-container"></div>
+        <div class="controls-wrapper">
+            <div class="slider" id="slider-flight-length"></div>
+
+            <div class="slider" id="slider-temperature"></div>
+        </div>
+        
+
         <script src="dist/app.js"></script>
     </body>
 </html>
