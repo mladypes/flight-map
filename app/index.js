@@ -6,23 +6,8 @@ import * as slider from 'nouislider'
 const width = 600
 const height = 500
 
-slider.create(document.getElementById('slider-flight-length'), {
-	start: [20, 80],
-	connect: true,
-	range: {
-		'min': 0,
-		'max': 100
-	}
-});
-
-slider.create(document.getElementById('slider-temperature'), {
-	start: [20, 80],
-	connect: true,
-	range: {
-		'min': 0,
-		'max': 100
-	}
-});
+let lengthSlider;
+let temperatureSlider;
 
 const projection = d3.geoOrthographic()
     .scale(220)
@@ -44,6 +29,43 @@ svg.append('path')
     .attr('class', 'water')
     .attr('d', path)
 
+function setupSliders (cities, updateCallback) {
+    const temperatureRange = getValueRange(cities, c => c.properties.temperature)
+    const flightLengthRange = getValueRange(cities, c => c.properties.flightDuration)
+    console.log('temperature', temperatureRange)
+    console.log('length', flightLengthRange)
+
+    temperatureSlider = createSlider(document.getElementById('slider-temperature'), temperatureRange.min, temperatureRange.max)
+    temperatureSlider.noUiSlider.on('change', updateCallback)
+    lengthSlider = createSlider(document.getElementById('slider-flight-length'), flightLengthRange.min, flightLengthRange.max)
+    lengthSlider.noUiSlider.on('change', updateCallback)
+}
+
+function createSlider (domElement, minValue, maxValue) {
+    slider.create(domElement, {
+        start: [minValue, maxValue],
+        connect: true,
+        range: {
+            'min': minValue,
+            'max': maxValue 
+        },
+        tooltips: true
+    });
+
+    return domElement
+}
+
+function getValueRange (objects, valueExtractor) {
+    return objects.reduce((acc, o) => {
+        const v = valueExtractor(o)
+        const {min, max} = acc;
+        return {
+            min: v < min ? v : min,
+            max: v > max ? v : max
+        }
+    }, {min: Infinity, max: -Infinity});
+}
+
 d3.queue()
     .defer(d3.json, 'data/world-110m.json')
     .defer(d3.tsv, 'data/world-110m-country-names.tsv')
@@ -55,77 +77,20 @@ d3.queue()
         const bratislava = citiesG.find(c => c.id === 'Bratislava')
         const otherCities = citiesG.filter(c => c.id !== 'Bratislava')
 
+        setupSliders(otherCities, () => {
+            update(bratislava, otherCities, temperatureSlider.noUiSlider.get(), lengthSlider.noUiSlider.get())
+        })
+        
+
         const countryMap = countryData.reduce((map, data) => Object.assign(map, {[data.name]: data}), {})
 
-        let lands = svg.selectAll('path.land')
+        svg.selectAll('path.land')
             .data(countries)
             .enter()
             .append('path')
             .attr('class', 'land')
             .attr('d', path)
-        
-        const lines = otherCities.map(c => lineStringFeature(bratislava.geometry.coordinates, c.geometry.coordinates))
-
-        let lns = svg.selectAll('path.route')
-            .data(lines)
-            .enter()
-            .append('path')
-            .attr('class', 'route')
-            .attr('d', path)
-        
-        let cts = svg.selectAll('path.city')
-            .data(otherCities)
-            .enter()
-            .append('path')
-            .attr('class', 'city')
-            .attr('d', path)
-
-        function lineStringFeature (start, end) {
-            return {
-                "type": "Feature",
-                "geometry": {
-                    "type": "LineString",
-                    "coordinates": [start, end]
-                }
-            }
-        }
-
-        let planes;
-        
-        function addPlanes () {
-            planes = svg.selectAll('.plane')
-                .data(lns.nodes())
-                .enter()
-                .append('circle')
-                .attr('r', 3)
-                .attr('class', 'plane')
-                .attr("transform", d => "translate(" + d.getPointAtLength(0).x + ',' + d.getPointAtLength(0).y + ")" )
-        }
-
-        function planesTransition() {
-            planes
-                .filter(function () {
-                    return d3.active(this) === null
-                })
-                .transition()
-                .duration(function () {
-                    return 6000 + Math.random() * 6000
-                })
-                .attrTween('transform', function (d) {
-                    return translateAlong(d)
-                })
-                .on('end', planesTransition)
-        }
-
-        function translateAlong (path) {
-            const l = path.getTotalLength();
-            
-            return function (t) {
-                const p = path.getPointAtLength(t * l);
-                return "translate(" + p.x + "," + p.y + ")";
-            };
-            
-        }
+            .exit().remove()
         
         transitionTo('Slovakia')
         
@@ -146,8 +111,82 @@ d3.queue()
                     }
                 })
                 .on('end', function () {
-                    addPlanes();
-                    planesTransition();
+                    update(bratislava, otherCities, temperatureSlider.noUiSlider.get(), lengthSlider.noUiSlider.get())
                 })
         }
     })
+
+function update(start, destinations, temperatureRange, lengthRange) {
+    const filteredDestinations = destinations.filter(v => {
+        return (v.properties.temperature >= temperatureRange[0] && v.properties.temperature <= temperatureRange[1]) &&
+            (v.properties.flightDuration >= lengthRange[0] && v.properties.flightDuration <= lengthRange[1])
+    })
+
+    const lines = filteredDestinations.map(c => lineStringFeature(start.geometry.coordinates, c.geometry.coordinates))
+    
+
+    let lns = svg.selectAll('path.route')
+        .data(lines)
+
+    lns.enter()
+        .append('path')
+        .attr('class', 'route')
+        .attr('d', path)
+    
+    lns.exit()
+        .remove()
+    
+    let cts = svg.selectAll('path.city')
+        .data(filteredDestinations)
+
+    cts.enter()
+        .append('path')
+        .attr('class', 'city')
+        .attr('d', path)
+    cts.exit()
+        .remove()
+
+    function lineStringFeature (start, end) {
+        return {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [start, end]
+            }
+        }
+    }
+
+    let planes;
+    addPlanes();
+    
+    function addPlanes () {
+        planes = svg.selectAll('.plane')
+            .data(lns.nodes())
+
+        planes.enter()
+            .append('circle')
+            .attr('r', 3)
+            .attr('class', 'plane')
+            .attr("transform", d => "translate(" + d.getPointAtLength(0).x + ',' + d.getPointAtLength(0).y + ")" )
+
+        planes.exit().remove()
+
+        // planes.transition()
+        //     .duration(function () {
+        //         return 6000 + Math.random() * 6000
+        //     })
+        //     .attrTween('transform', function (d) {
+        //         return translateAlong(d)
+        //     })
+    }
+
+    function translateAlong (path) {
+        const l = path.getTotalLength();
+        
+        return function (t) {
+            const p = path.getPointAtLength(t * l);
+            return "translate(" + p.x + "," + p.y + ")";
+        };
+        
+    }
+}

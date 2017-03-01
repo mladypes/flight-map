@@ -186,8 +186,8 @@
 		"type": "Feature",
 		"properties": {
 			"city": "Madrid",
-			"temperature": 190,
-			"flightDuration": 10.7
+			"temperature": 10.7,
+			"flightDuration": 190
 		},
 		"id": "Madrid"
 	}, {
