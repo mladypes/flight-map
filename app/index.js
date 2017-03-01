@@ -32,8 +32,6 @@ svg.append('path')
 function setupSliders (cities, updateCallback) {
     const temperatureRange = getValueRange(cities, c => c.properties.temperature)
     const flightLengthRange = getValueRange(cities, c => c.properties.flightDuration)
-    console.log('temperature', temperatureRange)
-    console.log('length', flightLengthRange)
 
     temperatureSlider = createSlider(document.getElementById('slider-temperature'), temperatureRange.min, temperatureRange.max)
     temperatureSlider.noUiSlider.on('change', updateCallback)
@@ -123,10 +121,13 @@ function update(start, destinations, temperatureRange, lengthRange) {
     })
 
     const lines = filteredDestinations.map(c => lineStringFeature(start.geometry.coordinates, c.geometry.coordinates))
+    console.log(lines);
     
 
     let lns = svg.selectAll('path.route')
         .data(lines)
+        .attr('d', path)
+    
 
     lns.enter()
         .append('path')
@@ -138,11 +139,13 @@ function update(start, destinations, temperatureRange, lengthRange) {
     
     let cts = svg.selectAll('path.city')
         .data(filteredDestinations)
+        .attr('d', path)
 
     cts.enter()
         .append('path')
         .attr('class', 'city')
         .attr('d', path)
+    
     cts.exit()
         .remove()
 
@@ -155,38 +158,59 @@ function update(start, destinations, temperatureRange, lengthRange) {
             }
         }
     }
-
-    let planes;
-    addPlanes();
+    addPlanes()
     
     function addPlanes () {
-        planes = svg.selectAll('.plane')
-            .data(lns.nodes())
+        let routes = svg.selectAll('path.route')
+        // let planes = svg.selectAll('.plane')
+        //     .data(routes.nodes())
+        //     .attr('r', 3)
+        //     .attr('class', 'plane')
+        //     .attr("transform", d => "translate(" + d.getPointAtLength(0).x + ',' + d.getPointAtLength(0).y + ")" )
+        
+        let planes = svg.selectAll('.plane')
+            .data(routes.nodes())
+            .attr('class', 'plane')
+            .attr("transform", d => "translate(" + (d.getPointAtLength(0).x - 5) + ',' + (d.getPointAtLength(0).y - 5) + ")" )
+        
+        planes.transition()
+            .duration(5000)
+            .attrTween('transform', d => translateAlong(d))
 
         planes.enter()
-            .append('circle')
-            .attr('r', 3)
+            .append('svg:image')
             .attr('class', 'plane')
-            .attr("transform", d => "translate(" + d.getPointAtLength(0).x + ',' + d.getPointAtLength(0).y + ")" )
+            .attr('href', 'images/plane.svg')
+            .attr('width', 10)
+            .attr('height', 10)
+            .attr("transform", d => "translate(" + (d.getPointAtLength(0).x - 5) + ',' + (d.getPointAtLength(0).y - 5) + ")" )
+            .transition()
+            .duration(5000)
+            .attrTween('transform', d => translateAlong(d))
 
         planes.exit().remove()
-
-        // planes.transition()
-        //     .duration(function () {
-        //         return 6000 + Math.random() * 6000
-        //     })
-        //     .attrTween('transform', function (d) {
-        //         return translateAlong(d)
-        //     })
     }
+
+
 
     function translateAlong (path) {
         const l = path.getTotalLength();
         
         return function (t) {
-            const p = path.getPointAtLength(t * l);
-            return "translate(" + p.x + "," + p.y + ")";
+            const p = path.getPointAtLength(t * l)
+            const start = path.getPointAtLength(0)
+            const end = path.getPointAtLength(l);
+            
+            return "translate(" + (p.x - 5) + "," + (p.y - 5) + ") rotate(" + (angleBetween(start, end) + 90) + ")"
         };
         
+    }
+
+    function angleBetween (pointA, pointB) {
+        return Math.atan2(pointB.y - pointA.y, pointB.x - pointA.x) * 180 / Math.PI
+    }
+
+    function len (vector) {
+        return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2))
     }
 }
