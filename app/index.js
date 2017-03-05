@@ -6,8 +6,10 @@ import * as slider from 'nouislider'
 const width = 600
 const height = 500
 
-let lengthSlider;
-let temperatureSlider;
+let planeData = []
+
+let lengthSlider
+let temperatureSlider
 
 const projection = d3.geoOrthographic()
     .scale(220)
@@ -47,7 +49,10 @@ function createSlider (domElement, minValue, maxValue) {
             'min': minValue,
             'max': maxValue 
         },
-        tooltips: true
+        pips: {
+            mode: 'range',
+            density: Math.floor(maxValue - minValue) / 10
+        }
     });
 
     return domElement
@@ -121,7 +126,6 @@ function update(start, destinations, temperatureRange, lengthRange) {
     })
 
     const lines = filteredDestinations.map(c => lineStringFeature(start.geometry.coordinates, c.geometry.coordinates))
-    console.log(lines);
     
 
     let lns = svg.selectAll('path.route')
@@ -136,17 +140,29 @@ function update(start, destinations, temperatureRange, lengthRange) {
     
     lns.exit()
         .remove()
-    
-    let cts = svg.selectAll('path.city')
-        .data(filteredDestinations)
-        .attr('d', path)
 
+    const citySize = 5;
+    
+    let cts = svg.selectAll('.city')
+        .data(filteredDestinations, d => d.id)
+        .attr('cx', d => projection(d.geometry.coordinates)[0])
+        .attr('cy', d => projection(d.geometry.coordinates)[1])
+        .attr('r', citySize)
+    
     cts.enter()
-        .append('path')
+        .append('circle')
         .attr('class', 'city')
-        .attr('d', path)
+        .attr('cx', d => projection(d.geometry.coordinates)[0])
+        .attr('cy', d => projection(d.geometry.coordinates)[1])
+        .transition()
+        .ease(d3.easeBounce)
+        .duration(750)
+        .attr('r', citySize)
     
     cts.exit()
+        .transition()
+        .duration(750)
+        .attr('r', 0)
         .remove()
 
     function lineStringFeature (start, end) {
@@ -158,24 +174,31 @@ function update(start, destinations, temperatureRange, lengthRange) {
             }
         }
     }
-    addPlanes()
+
+    planeData = []
+    function updatePlaneData () {
+        const routeNodes = svg.selectAll('path.route').nodes()
+
+        planeData.push({
+            node: routeNodes[Math.floor(Math.random() * routeNodes.length)],
+            id: Date.now()
+        })
+
+        addPlanes()
+
+        setTimeout(updatePlaneData, 2000 + Math.random() * 2000)
+    }
+
+    updatePlaneData()
     
     function addPlanes () {
         let routes = svg.selectAll('path.route')
-        // let planes = svg.selectAll('.plane')
-        //     .data(routes.nodes())
-        //     .attr('r', 3)
-        //     .attr('class', 'plane')
-        //     .attr("transform", d => "translate(" + d.getPointAtLength(0).x + ',' + d.getPointAtLength(0).y + ")" )
         
         let planes = svg.selectAll('.plane')
-            .data(routes.nodes())
+            .data(planeData, d => d.id)
             .attr('class', 'plane')
-            .attr("transform", d => "translate(" + (d.getPointAtLength(0).x - 5) + ',' + (d.getPointAtLength(0).y - 5) + ")" )
-        
-        planes.transition()
-            .duration(5000)
-            .attrTween('transform', d => translateAlong(d))
+            .attr("x", -5)
+            .attr("y", -5)
 
         planes.enter()
             .append('svg:image')
@@ -183,10 +206,28 @@ function update(start, destinations, temperatureRange, lengthRange) {
             .attr('href', 'images/plane.svg')
             .attr('width', 10)
             .attr('height', 10)
-            .attr("transform", d => "translate(" + (d.getPointAtLength(0).x - 5) + ',' + (d.getPointAtLength(0).y - 5) + ")" )
-            .transition()
-            .duration(5000)
-            .attrTween('transform', d => translateAlong(d))
+            .attr("x", -5)
+            .attr("y", -5)
+            .each(function () {
+                return tr(this)
+            })
+        
+        function tr(e) {
+            d3.select(e)
+                .transition()
+                .duration(d => d.node.getTotalLength() * 100)
+                .ease(d3.easeQuad)
+                .attrTween('transform', d => translateAlong(d.node))
+                .on('end', () => {
+                    const {id} = d3.select(e).datum()
+                    const plane = planeData.find(p => p.id === id)
+                    const planeIndex = planeData.indexOf(plane)
+                    planeData.splice(planeIndex, 1)
+
+                    e.remove()
+                })
+        }
+            
 
         planes.exit().remove()
     }
@@ -201,7 +242,7 @@ function update(start, destinations, temperatureRange, lengthRange) {
             const start = path.getPointAtLength(0)
             const end = path.getPointAtLength(l);
             
-            return "translate(" + (p.x - 5) + "," + (p.y - 5) + ") rotate(" + (angleBetween(start, end) + 90) + ")"
+            return "translate(" + p.x + "," + p.y + ") rotate(" + (angleBetween(start, end) + 90) + ")"
         };
         
     }
