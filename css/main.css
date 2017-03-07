@@ -7,6 +7,17 @@ html, body {
     background: #000000;
     font-size: 16px;
     font-family: 'Roboto Condensed', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: block;
+}
+
+.wrapper {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .water {
@@ -20,10 +31,10 @@ html, body {
 }
 
 .route {
-    stroke: #008b00;
-    stroke-width: 10;
+    stroke: white;
+    stroke-width: 0.3;
     fill: transparent;
-    visibility: hidden;
+    visibility: visible;
 }
 
 .route:hover {
@@ -49,19 +60,16 @@ html, body {
 .heading {
     position: relative;
     box-sizing: border-box;
-    margin-top: 20px;
-    margin-left: 20px;
 }
 
 .controls-wrapper {
     box-sizing: border-box;
     position: relative;
     width: 25%;
-    margin-left: 20px;
 }
 
 .slider {
-    margin: 10px 20px 40px 20px;
+    margin: 50px 20px 40px 20px;
 }
 
 h1 {
@@ -77,9 +85,95 @@ p {
 }
 
 .city {
-    fill: red;
+    stroke: #000;
+    fill: #599ba0;
 }
 
 .city:hover {
-    fill: white;
+    fill: #000;
+    stroke: #599ba0;
+}
+
+.tooltip {
+    box-sizing: border-box;
+    position: absolute;
+    display: none;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.7);
+    padding-bottom: px;
+    color: black;
+    z-index: 9999;
+}
+
+.tooltip h1 {
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 1.1rem;
+}
+
+.tooltip:hover {
+    display: block!important;
+}
+
+.tooltip a {
+    color: black;
+}
+
+.tooltip a:hover {
+    color: #555;
+}
+
+.noUi-horizontal {
+    height: 2px;
+}
+
+.noUi-target {
+    border: 0!important;
+}
+
+.noUi-horizontal .noUi-handle {
+    width: 8px;
+    top: -13px;
+    left: -4px;
+}
+
+.noUi-handle {
+    border: 1px solid white;
+    background: #9CE3E9;
+    border-radius: 0;
+    box-shadow: 0;
+}
+
+.noUi-handle::after {
+    content: none;
+}
+
+.noUi-handle::before {
+    content: none;
+}
+
+.noUi-tooltip {
+    border-radius: 0;
+    border: 0;
+    font-size: 0.8rem;
+    background: rgba(131, 150, 153, 1);
+}
+
+.credits {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    padding: 5px;
+    padding-right: 15px;
+    color: black;
+    text-align: right;
+    color: white;
+}
+
+.credits a {
+    color: white;
+    font-weight: 700;
 }

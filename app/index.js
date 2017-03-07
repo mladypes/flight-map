@@ -2,6 +2,7 @@ import * as d3 from 'd3'
 import * as topojson from 'topojson'
 
 import * as slider from 'nouislider'
+import wNumb from 'wnumb'
 
 const width = 600
 const height = 500
@@ -10,6 +11,9 @@ let planeData = []
 
 let lengthSlider
 let temperatureSlider
+
+let timeoutId
+let lastPlaneTime = 0
 
 const projection = d3.geoOrthographic()
     .scale(220)
@@ -31,17 +35,29 @@ svg.append('path')
     .attr('class', 'water')
     .attr('d', path)
 
+const landGroup = svg.append('g')
+const routeGroup = svg.append('g')
+const cityGroup = svg.append('g')
+const planeGroup = svg.append('g')
+
+let tooltip = d3.select('#tooltip')
+
 function setupSliders (cities, updateCallback) {
     const temperatureRange = getValueRange(cities, c => c.properties.temperature)
     const flightLengthRange = getValueRange(cities, c => c.properties.flightDuration)
 
-    temperatureSlider = createSlider(document.getElementById('slider-temperature'), temperatureRange.min, temperatureRange.max)
+    const flightLengthFormatter = {
+        from: function (v) {return v},
+        to: formatFlightLength
+    }
+
+    temperatureSlider = createSlider(document.getElementById('slider-temperature'), temperatureRange.min, temperatureRange.max, [wNumb({decimals:1}), wNumb({decimals:1})])
     temperatureSlider.noUiSlider.on('change', updateCallback)
-    lengthSlider = createSlider(document.getElementById('slider-flight-length'), flightLengthRange.min, flightLengthRange.max)
+    lengthSlider = createSlider(document.getElementById('slider-flight-length'), flightLengthRange.min, flightLengthRange.max, [flightLengthFormatter, flightLengthFormatter])
     lengthSlider.noUiSlider.on('change', updateCallback)
 }
 
-function createSlider (domElement, minValue, maxValue) {
+function createSlider (domElement, minValue, maxValue, formatters) {
     slider.create(domElement, {
         start: [minValue, maxValue],
         connect: true,
@@ -49,10 +65,7 @@ function createSlider (domElement, minValue, maxValue) {
             'min': minValue,
             'max': maxValue 
         },
-        pips: {
-            mode: 'range',
-            density: Math.floor(maxValue - minValue) / 10
-        }
+        tooltips: formatters
     });
 
     return domElement
@@ -83,11 +96,10 @@ d3.queue()
         setupSliders(otherCities, () => {
             update(bratislava, otherCities, temperatureSlider.noUiSlider.get(), lengthSlider.noUiSlider.get())
         })
-        
 
         const countryMap = countryData.reduce((map, data) => Object.assign(map, {[data.name]: data}), {})
 
-        svg.selectAll('path.land')
+        landGroup.selectAll('path.land')
             .data(countries)
             .enter()
             .append('path')
@@ -120,6 +132,7 @@ d3.queue()
     })
 
 function update(start, destinations, temperatureRange, lengthRange) {
+    d3.selectAll('.plane').transition()
     const filteredDestinations = destinations.filter(v => {
         return (v.properties.temperature >= temperatureRange[0] && v.properties.temperature <= temperatureRange[1]) &&
             (v.properties.flightDuration >= lengthRange[0] && v.properties.flightDuration <= lengthRange[1])
@@ -128,7 +141,7 @@ function update(start, destinations, temperatureRange, lengthRange) {
     const lines = filteredDestinations.map(c => lineStringFeature(start.geometry.coordinates, c.geometry.coordinates))
     
 
-    let lns = svg.selectAll('path.route')
+    let lns = routeGroup.selectAll('path.route')
         .data(lines)
         .attr('d', path)
     
@@ -141,9 +154,9 @@ function update(start, destinations, temperatureRange, lengthRange) {
     lns.exit()
         .remove()
 
-    const citySize = 5;
+    const citySize = 3;
     
-    let cts = svg.selectAll('.city')
+    let cts = cityGroup.selectAll('.city')
         .data(filteredDestinations, d => d.id)
         .attr('cx', d => projection(d.geometry.coordinates)[0])
         .attr('cy', d => projection(d.geometry.coordinates)[1])
@@ -154,6 +167,21 @@ function update(start, destinations, temperatureRange, lengthRange) {
         .attr('class', 'city')
         .attr('cx', d => projection(d.geometry.coordinates)[0])
         .attr('cy', d => projection(d.geometry.coordinates)[1])
+        .on('mouseover', function (d) {
+            const br = d3.select(this).node().getBoundingClientRect()
+            tooltip
+                .html(tooltipHtml(d))
+                .style('display', 'block')
+
+            const tooltipRect = tooltip.node().getBoundingClientRect()
+
+            tooltip
+                .style('left', (br.left + br.width / 2 - tooltipRect.width / 2) + 'px')
+                .style('top', (br.top + br.height / 2 - tooltipRect.height) + 'px')
+        })
+        .on('mouseleave', function (d) {
+            tooltip.style('display', 'none')
+        })
         .transition()
         .ease(d3.easeBounce)
         .duration(750)
@@ -176,8 +204,10 @@ function update(start, destinations, temperatureRange, lengthRange) {
     }
 
     planeData = []
+    clearTimeout(timeoutId)
+
     function updatePlaneData () {
-        const routeNodes = svg.selectAll('path.route').nodes()
+        const routeNodes = routeGroup.selectAll('path.route').nodes()
 
         planeData.push({
             node: routeNodes[Math.floor(Math.random() * routeNodes.length)],
@@ -185,16 +215,13 @@ function update(start, destinations, temperatureRange, lengthRange) {
         })
 
         addPlanes()
-
-        setTimeout(updatePlaneData, 2000 + Math.random() * 2000)
+        timeoutId = setTimeout(updatePlaneData, 2000)
     }
 
     updatePlaneData()
     
     function addPlanes () {
-        let routes = svg.selectAll('path.route')
-        
-        let planes = svg.selectAll('.plane')
+        let planes = planeGroup.selectAll('.plane')
             .data(planeData, d => d.id)
             .attr('class', 'plane')
             .attr("x", -5)
@@ -223,16 +250,35 @@ function update(start, destinations, temperatureRange, lengthRange) {
                     const plane = planeData.find(p => p.id === id)
                     const planeIndex = planeData.indexOf(plane)
                     planeData.splice(planeIndex, 1)
-
-                    e.remove()
                 })
+                .remove()
         }
             
 
         planes.exit().remove()
     }
 
+    function tooltipHtml (data) {
+        const strings = [
+            '<h1>',
+            data.properties.city,
+            '</h1>',
+            'Average March temperature: ',
+            data.properties.temperature,
+            '&#8451;<br>',
+            'Flight duration: ',
+            formatFlightLength(data.properties.flightDuration),
+            '<br>',
+            'Company: ',
+            '<a target="_blank" href="',
+            data.properties.company.link,
+            '">',
+            data.properties.company.name,
+            '</a>'
+        ]
 
+        return strings.join('')
+    }
 
     function translateAlong (path) {
         const l = path.getTotalLength();
@@ -254,4 +300,10 @@ function update(start, destinations, temperatureRange, lengthRange) {
     function len (vector) {
         return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2))
     }
+}
+
+
+
+function formatFlightLength (minutes) {
+    return parseInt(minutes / 60) + 'h&nbsp;' + parseInt(minutes % 60) + 'm'
 }

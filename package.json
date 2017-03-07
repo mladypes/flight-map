@@ -19,6 +19,8 @@
   "dependencies": {
     "d3": "^4.5.1",
     "nouislider": "^9.2.0",
-    "topojson": "^2.2.0"
+    "opentip": "^2.4.3",
+    "topojson": "^2.2.0",
+    "wnumb": "^1.1.0"
   }
 }

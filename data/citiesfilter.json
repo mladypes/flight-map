@@ -19,7 +19,11 @@
 		"properties": {
 			"city": "Athens",
 			"temperature": 11.7,
-			"flightDuration": 130
+			"flightDuration": 130,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Athens"
 	}, {
@@ -31,7 +35,11 @@
 		"properties": {
 			"city": "Barcelona",
 			"temperature": 11.3,
-			"flightDuration": 140
+			"flightDuration": 140,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Barcelona"
 	}, {
@@ -43,7 +51,11 @@
 		"properties": {
 			"city": "Birmingham",
 			"temperature": 5.2,
-			"flightDuration": 155
+			"flightDuration": 155,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Birmingham"
 	}, {
@@ -55,7 +67,11 @@
 		"properties": {
 			"city": "Brussels",
 			"temperature": 6.4,
-			"flightDuration": 105
+			"flightDuration": 105,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Brussels"
 	}, {
@@ -67,7 +83,11 @@
 		"properties": {
 			"city": "Berlin",
 			"temperature": 4.8,
-			"flightDuration": 80
+			"flightDuration": 80,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Berlin"
 	}, {
@@ -79,7 +99,11 @@
 		"properties": {
 			"city": "Dublin",
 			"temperature": 6.6,
-			"flightDuration": 180
+			"flightDuration": 180,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Dublin"
 	}, {
@@ -91,7 +115,11 @@
 		"properties": {
 			"city": "Dubai",
 			"temperature": 22.3,
-			"flightDuration": 345
+			"flightDuration": 345,
+			"company": {
+				"name": "flydubai",
+				"link": "https://www.flydubai.com/"
+			}
 		},
 		"id": "Dubai"
 	}, {
@@ -103,7 +131,11 @@
 		"properties": {
 			"city": "Edinburgh",
 			"temperature": 5.5,
-			"flightDuration": 165
+			"flightDuration": 165,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Edinburgh"
 	}, {
@@ -115,7 +147,11 @@
 		"properties": {
 			"city": "Eilat",
 			"temperature": 19.8,
-			"flightDuration": 225
+			"flightDuration": 225,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Eilat"
 	}, {
@@ -127,7 +163,11 @@
 		"properties": {
 			"city": "Cluj",
 			"temperature": 4.1,
-			"flightDuration": 80
+			"flightDuration": 80,
+			"company": {
+				"name": "Wizz Air",
+				"link": "https://wizzair.com"
+			}
 		},
 		"id": "Cluj"
 	}, {
@@ -139,7 +179,11 @@
 		"properties": {
 			"city": "Košice",
 			"temperature": 4.0,
-			"flightDuration": 55
+			"flightDuration": 55,
+			"company": {
+				"name": "Czech Airlines",
+				"link": "https://www.csa.cz"
+			}
 		},
 		"id": "Košice"
 	}, {
@@ -151,7 +195,15 @@
 		"properties": {
 			"city": "Kiev",
 			"temperature": 0.7,
-			"flightDuration": 100
+			"flightDuration": 100,
+			"company": {
+				"name": "Wizz Air",
+			"company": {
+				"name": "Wizz Air",
+				"link": "https://wizzair.com"
+			},
+				"link": "https://wizzair.com"
+			}
 		},
 		"id": "Kiev"
 	}, {
@@ -163,7 +215,11 @@
 		"properties": {
 			"city": "Leeds",
 			"temperature": 4.5,
-			"flightDuration": 145
+			"flightDuration": 145,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Leeds"
 	}, {
@@ -175,7 +231,11 @@
 		"properties": {
 			"city": "London",
 			"temperature": 8.0,
-			"flightDuration": 145
+			"flightDuration": 145,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "London"
 	}, {
@@ -187,7 +247,11 @@
 		"properties": {
 			"city": "Madrid",
 			"temperature": 10.7,
-			"flightDuration": 190
+			"flightDuration": 190,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Madrid"
 	}, {
@@ -199,7 +263,11 @@
 		"properties": {
 			"city": "Manchester",
 			"temperature": 6.3,
-			"flightDuration": 190
+			"flightDuration": 190,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Manchester"
 	}, {
@@ -211,7 +279,11 @@
 		"properties": {
 			"city": "Milano",
 			"temperature": 13.2,
-			"flightDuration": 90
+			"flightDuration": 90,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Milano"
 	}, {
@@ -223,7 +295,11 @@
 		"properties": {
 			"city": "Moscow",
 			"temperature": -2.2,
-			"flightDuration": 155
+			"flightDuration": 155,
+			"company": {
+				"name": "Pobeda Airlines",
+				"link": "https://www.pobeda.aero/en"
+			}
 		},
 		"id": "Moscow"
 	}, {
@@ -235,7 +311,11 @@
 		"properties": {
 			"city": "Niš",
 			"temperature": 6.6,
-			"flightDuration": 90
+			"flightDuration": 90,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Niš"
 	}, {
@@ -247,7 +327,11 @@
 		"properties": {
 			"city": "Paris",
 			"temperature": 8.4,
-			"flightDuration": 125
+			"flightDuration": 125,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Paris"
 	}, {
@@ -259,7 +343,11 @@
 		"properties": {
 			"city": "Prague",
 			"temperature": 3.1,
-			"flightDuration": 60
+			"flightDuration": 60,
+			"company": {
+				"name": "Czech Airlines",
+				"link": "https://www.csa.cz"
+			}
 		},
 		"id": "Prague"
 	}, {
@@ -271,7 +359,11 @@
 		"properties": {
 			"city": "Rome",
 			"temperature": 10.2,
-			"flightDuration": 100
+			"flightDuration": 100,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
 		},
 		"id": "Rome"
 	}, {
@@ -283,7 +375,11 @@
 		"properties": {
 			"city": "Skopje",
 			"temperature": 7.6,
-			"flightDuration": 95
+			"flightDuration": 95,
+			"company": {
+				"name": "Wizz Air",
+				"link": "https://wizzair.com"
+			}
 		},
 		"id": "Skopje"
 	}]
