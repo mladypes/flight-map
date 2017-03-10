@@ -382,5 +382,85 @@
 			}
 		},
 		"id": "Skopje"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [12.516667, 38.016667]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Trapani",
+			"temperature": 13,
+			"flightDuration": 135,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
+		},
+		"id": "Trapani"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [8.316667, 40.55]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Alghero",
+			"temperature": 11,
+			"flightDuration": 125,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
+		},
+		"id": "Alghero"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [3.017571, 39.695263]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Mallorca",
+			"temperature": 12,
+			"flightDuration": 155,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
+		},
+		"id": "Mallorca"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [-4.42, 36.719444]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Malaga",
+			"temperature": 14,
+			"flightDuration": 220,
+			"company": {
+				"name": "Ryanair",
+				"link": "http://ryanair.com/"
+			}
+		},
+		"id": "Malaga"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [18.6705, 44.5328]
+		},
+		"type": "Feature",
+		"properties": {
+			"city": "Tuzla",
+			"temperature": 5.1,
+			"flightDuration": 70,
+			"company": {
+				"name": "Wizz Air",
+				"link": "https://wizzair.com"
+			}
+		},
+		"id": "Tuzla"
 	}]
 }
