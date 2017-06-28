@@ -13,7 +13,6 @@ let lengthSlider
 let temperatureSlider
 
 let timeoutId
-let lastPlaneTime = 0
 
 const projection = d3.geoOrthographic()
     .scale(220)
